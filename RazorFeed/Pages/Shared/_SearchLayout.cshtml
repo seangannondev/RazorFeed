@@ -1,0 +1,55 @@
+﻿
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<div class="search">
+
+    <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#Share">Share</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Search">Search</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#Trends">Trends</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane container active" id="Share">
+            <form>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">What's on your mind</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            </form>
+        </div>
+       
+        <div class="tab-pane container fade" id="menu1">
+            <div class="usersearch">
+                <input class="form-control" type="text" placeholder="Search Users" aria-label="Search">
+            </div>
+            <div class="stocksearch">
+                <input class="form-control" type="text" placeholder="Search Stocks" aria-label="Search">
+            </div>
+        </div>
+        <div class="tab-pane container fade" id="Trends"></div>
+    </div>
+
+
+
+</div>
+<div>
+    <p>@RenderBody()</p>
+</div>
+
+@*@section scripts {
+    <script type="text/javascript">alert('hello');</script>
+}*@
+
+
+

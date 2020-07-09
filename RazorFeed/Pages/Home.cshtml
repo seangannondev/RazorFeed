@@ -1,0 +1,9 @@
+﻿@page
+@model RazorFeed.Pages.HomeModel
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Pages/Shared/_SearchLayout.cshtml";
+}
+
+<h1>Home</h1>
+<h2>welcome @Request.Query["id"] </h2>
