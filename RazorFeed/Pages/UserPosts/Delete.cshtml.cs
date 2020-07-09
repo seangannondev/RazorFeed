@@ -8,17 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using RazorFeed.Data;
 using RazorFeed.Models;
 
-namespace RazorFeed.Pages
+namespace RazorFeed.Pages.UserPosts
 {
-    public class DetailsModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly RazorFeed.Data.RazorFeedContext _context;
 
-        public DetailsModel(RazorFeed.Data.RazorFeedContext context)
+        public DeleteModel(RazorFeed.Data.RazorFeedContext context)
         {
             _context = context;
         }
 
+        [BindProperty]
         public UserPost UserPost { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -35,6 +36,24 @@ namespace RazorFeed.Pages
                 return NotFound();
             }
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            UserPost = await _context.UserPost.FindAsync(id);
+
+            if (UserPost != null)
+            {
+                _context.UserPost.Remove(UserPost);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage("./Index");
         }
     }
 }

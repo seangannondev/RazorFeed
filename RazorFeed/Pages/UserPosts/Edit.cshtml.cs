@@ -4,17 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RazorFeed.Data;
 using RazorFeed.Models;
 
-namespace RazorFeed.Pages
+namespace RazorFeed.Pages.UserPosts
 {
-    public class DeleteModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly RazorFeed.Data.RazorFeedContext _context;
 
-        public DeleteModel(RazorFeed.Data.RazorFeedContext context)
+        public EditModel(RazorFeed.Data.RazorFeedContext context)
         {
             _context = context;
         }
@@ -38,22 +39,39 @@ namespace RazorFeed.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://aka.ms/RazorPagesCRUD.
+        public async Task<IActionResult> OnPostAsync()
         {
-            if (id == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return Page();
             }
 
-            UserPost = await _context.UserPost.FindAsync(id);
+            _context.Attach(UserPost).State = EntityState.Modified;
 
-            if (UserPost != null)
+            try
             {
-                _context.UserPost.Remove(UserPost);
                 await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserPostExists(UserPost.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
 
             return RedirectToPage("./Index");
+        }
+
+        private bool UserPostExists(int id)
+        {
+            return _context.UserPost.Any(e => e.Id == id);
         }
     }
 }

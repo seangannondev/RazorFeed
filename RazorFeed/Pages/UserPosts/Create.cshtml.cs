@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using RazorFeed.Data;
 using RazorFeed.Models;
 
-namespace RazorFeed.Pages
+namespace RazorFeed.Pages.UserPosts
 {
     public class CreateModel : PageModel
     {
